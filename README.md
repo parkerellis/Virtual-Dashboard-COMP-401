@@ -22,7 +22,7 @@ Log return computation
 
 Cache layer for API efficiency + staying within limits
 
-##Setup
+## Setup
 
 Install dependencies:
 
