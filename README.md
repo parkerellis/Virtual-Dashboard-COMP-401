@@ -28,7 +28,7 @@ Install dependencies:
 
 - pip install -r requirements.txt
 
-Run the project, by running main to start collecting live quotes, the running the graphing script to begin live plotting. Run both simultaneously.
+Run the project by running main to start collecting live quotes, then running the graphing script to begin live plotting. Run both simultaneously.
 
 - python main.py
 
