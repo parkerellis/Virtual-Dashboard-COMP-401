@@ -5,6 +5,7 @@ class FinnhubClient:
     def __init__(self, api_key: str):
         self._client = finnhub.Client(api_key=api_key)
 
+    # Returns structured quote from finnhub API
     def quote(self, symbol: str) -> dict:
         q = self._client.quote(symbol)
         # Finnhub keys: c, d, dp, h, l, o, pc, t
@@ -16,6 +17,7 @@ class FinnhubClient:
             "timestamp_unix": q.get("t"),
         }
 
+    # Returns structured historical data from yfinance
 class YFinanceClient:
     def history_close(self, symbol: str, period="6mo", interval="1d"):
         df = yf.download(symbol, period=period, interval=interval, progress=False)

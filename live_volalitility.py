@@ -32,7 +32,7 @@ def main():
 
     symbol = "AAPL"
 
-    # historical baseline
+    # historical baseline calcs
     hist_vol_ann = compute_60d_vol(ingest.yfin, symbol)
     vol_day = hist_vol_ann / math.sqrt(252)
 
@@ -40,6 +40,7 @@ def main():
 
     fig, (ax_price, ax_z, ax_histvol) = plt.subplots(3, 1, figsize=(10, 9), sharex=False)
 
+    # update snapshots and replot
     def update(_):
         rows = store.get_recent_snapshots(symbol, 25)
         if len(rows) < 2:

@@ -22,6 +22,7 @@ class Settings:
     snapshot_symbols: tuple[str, ...]
     snapshot_every_seconds: int
 
+# Gets 'settings' / default values from .env variables
 def get_settings() -> Settings:
     key = os.getenv("FINNHUB_API_KEY").strip()
     if not key:

@@ -1,5 +1,7 @@
 from datetime import datetime, timezone
 
+
+#Text file storage (OLD)
 def append_snapshot(
     path: str,
     symbol: str,

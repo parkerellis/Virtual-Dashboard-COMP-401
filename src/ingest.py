@@ -17,6 +17,7 @@ class IngestService:
         self.yfin = yfin
         self.cache = cache
 
+    # Get live quote from finnhub
     def get_quote(self, symbol: str, ttl_seconds: int) -> IngestResult:
         key = f"quote:{symbol.upper()}"
         if self.cache.is_fresh(key):
@@ -34,6 +35,7 @@ class IngestService:
                 return IngestResult(stale.value, "cache_stale", stale.fetched_at, error=str(ex))
             raise  
 
+    # Get historical quotes from yfinance
     def get_history_close(self, symbol: str, period: str, interval: str, ttl_seconds: int) -> IngestResult:
         key = f"history:{symbol.upper()}:{period}:{interval}"
         if self.cache.is_fresh(key):

@@ -9,7 +9,7 @@ from src.ingest import IngestService
 from src.storage import append_snapshot, unix_to_time
 from src.analytics import compute_60d_vol
 
-
+#Writes oruce snapshot to DB
 def write_snapshot_batch(ingest: IngestService, store: MariaDBStore, s):
     for sym in s.snapshot_symbols:
         quote_res = ingest.get_quote(sym, ttl_seconds=s.quote_ttl_seconds)
