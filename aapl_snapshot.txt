@@ -17,3 +17,7 @@
 2026-02-19 19:16:08 UTC  AAPL  price=261.7  change=-2.65 (-1.0025%)  fetched_at_unix=1771528552  fetched_at_realtime=2026-02-19 19:15:52 UTC
 2026-02-19 19:16:56 UTC  AAPL  price=261.69  change=-2.66 (-1.0062%)  fetched_at_unix=1771528596  fetched_at_realtime=2026-02-19 19:16:36 UTC
 2026-02-19 19:18:54 UTC  AAPL  price=261.89  change=-2.46 (-0.9306%)  fetched_at_unix=1771528715  fetched_at_realtime=2026-02-19 19:18:35 UTC
+2026-03-15 19:44:24 UTC  AAPL  price=250.14  change=-5.62 (-2.1974%)  fetched_at_unix=1773432000  fetched_at_realtime=2026-03-13 20:00:00 UTC
+2026-03-15 19:49:51 UTC  AAPL  price=250.14  change=-5.62 (-2.1974%)  fetched_at_unix=1773432000  fetched_at_realtime=2026-03-13 20:00:00 UTC
+2026-03-15 19:50:54 UTC  AAPL  price=250.14  change=-5.62 (-2.1974%)  fetched_at_unix=1773432000  fetched_at_realtime=2026-03-13 20:00:00 UTC
+2026-03-15 20:32:16 UTC  AAPL  price=250.12  change=-5.64 (-2.2052%)  fetched_at_unix=1773432000  fetched_at_realtime=2026-03-13 20:00:00 UTC
