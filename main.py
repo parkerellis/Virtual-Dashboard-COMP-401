@@ -58,37 +58,36 @@ def main():
         yfin=YFinanceClient(),
         cache=cache,
     )
-"""
-Outdated main portion:
 
-    # 1) Live quote with TTL 
-    quote_res = ingest.get_quote("AAPL", ttl_seconds=s.quote_ttl_seconds)
-    print("QUOTE:", quote_res.source, "last_updated=", unix_to_time(quote_res.last_updated_unix), "error=", quote_res.error)
-    print(quote_res.data)
+#Outdated main portion:
+    # # 1) Live quote with TTL 
+    # quote_res = ingest.get_quote("AAPL", ttl_seconds=s.quote_ttl_seconds)
+    # print("QUOTE:", quote_res.source, "last_updated=", unix_to_time(quote_res.last_updated_unix), "error=", quote_res.error)
+    # print(quote_res.data)
 
-    # 2) Historical closes with longer TTL
-    hist_res = ingest.get_history_close("AAPL", period="6mo", interval="1d", ttl_seconds=s.history_ttl_seconds)
-    print("\nHISTORY:", hist_res.source, "last_updated=", unix_to_time(hist_res.last_updated_unix), "error=", hist_res.error)
-    print(hist_res.data.tail())
+    # # 2) Historical closes with longer TTL
+    # hist_res = ingest.get_history_close("AAPL", period="6mo", interval="1d", ttl_seconds=s.history_ttl_seconds)
+    # print("\nHISTORY:", hist_res.source, "last_updated=", unix_to_time(hist_res.last_updated_unix), "error=", hist_res.error)
+    # print(hist_res.data.tail())
 
-    # 3) Write snapshot to a text file
-    q = quote_res.data
-    line = append_snapshot(
-        path=s.snapshot_file,
-        symbol=q["symbol"],
-        price=q["price"],
-        change=q["change"],
-        pct_change=q["pct_change"],
-        fetched_at_unix=q["timestamp_unix"],
-    )
-    print("\nSNAPSHOT WROTE:", line)
+    # # 3) Write snapshot to a text file
+    # q = quote_res.data
+    # line = append_snapshot(
+    #     path=s.snapshot_file,
+    #     symbol=q["symbol"],
+    #     price=q["price"],
+    #     change=q["change"],
+    #     pct_change=q["pct_change"],
+    #     fetched_at_unix=q["timestamp_unix"],
+    # )
+    # print("\nSNAPSHOT WROTE:", line)
 
-    #4) Graphing
+    # #4) Graphing
 
-    symbol = "AAPL"
-    hist_vol_ann = compute_60d_vol(ingest.yfin, symbol)
-    print("Latest 60D annualized vol:", hist_vol_ann)
-"""
+    # symbol = "AAPL"
+    # hist_vol_ann = compute_60d_vol(ingest.yfin, symbol)
+    # print("Latest 60D annualized vol:", hist_vol_ann)
+
     #5) Write to DB
 
     try:
