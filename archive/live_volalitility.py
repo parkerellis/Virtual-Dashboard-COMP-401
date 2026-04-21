@@ -43,12 +43,12 @@ def main():
         vol_day[symbol] = hist_vol_ann[symbol] / math.sqrt(252)
         hist_series[symbol] = compute_60d_vol_series(ingest.yfin, symbol)
 
-    fig, axes = plt.subplots(3, len(symbols), figsize=(14, 4 * len(symbols)), squeeze=False)
+    fig, axes = plt.subplots(3, len(symbols), figsize=(4 * len(symbols), 10), squeeze=False)
 
     # Update live stock data and replot
     def update(_):
         for i, symbol in enumerate(symbols):
-            rows = store.get_recent_snapshots(symbol, 25)
+            rows = store.get_recent_snapshots(symbol, 10)
             if len(rows) < 2:
                 continue
 

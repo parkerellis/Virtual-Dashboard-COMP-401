@@ -58,6 +58,8 @@ def main():
         yfin=YFinanceClient(),
         cache=cache,
     )
+"""
+Outdated main portion:
 
     # 1) Live quote with TTL 
     quote_res = ingest.get_quote("AAPL", ttl_seconds=s.quote_ttl_seconds)
@@ -86,7 +88,7 @@ def main():
     symbol = "AAPL"
     hist_vol_ann = compute_60d_vol(ingest.yfin, symbol)
     print("Latest 60D annualized vol:", hist_vol_ann)
-
+"""
     #5) Write to DB
 
     try:
