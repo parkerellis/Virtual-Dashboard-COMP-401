@@ -10,7 +10,7 @@ It ingests live market data, computes a 60-day annualized volatility baseline, a
 
 ## Data Sources
 
-- Finnhub API — real-time stock quotes  
+- Finnhub API (free tier) — real-time stock quotes  
 - Yahoo Finance (yfinance) — historical price data  
 
 ---
