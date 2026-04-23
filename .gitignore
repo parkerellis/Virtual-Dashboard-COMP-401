@@ -8,3 +8,5 @@ build/
 dashboard.html
 aapl_snapshot.txt
 *.pyc
+__pycache__/
+*.pyc
