@@ -127,6 +127,10 @@ def render_home_page():
                                 "Standardizing live price moves relative to historical volatility using a z-score framework",
                                 className="app-subtitle",
                             ),
+                            html.Div(
+                                "Top = Price   |   Bottom = Z-score (vs 60D volatility)",
+                                className="app-subtitle-secondary",
+                            ),
                         ]
                     ),
                     html.Div(

@@ -21,13 +21,35 @@ def _base_layout(fig: go.Figure, height: int):
         template=None,
         paper_bgcolor=PANEL,
         plot_bgcolor=PANEL,
-        font={"color": TEXT, "size": 12},
-        margin=dict(l=18, r=8, t=8, b=18),
+        font={"color": TEXT, "size": 11},
+        margin=dict(l=16, r=6, t=6, b=16),
         height=height,
-        xaxis=dict(showgrid=True, gridcolor=GRID, zeroline=False, color=MUTED),
-        yaxis=dict(showgrid=True, gridcolor=GRID, zeroline=False, color=MUTED),
         showlegend=False,
     )
+
+    fig.update_xaxes(
+        showgrid=True,
+        gridcolor=GRID,
+        zeroline=False,
+        color=MUTED,
+        automargin=True,
+        ticks="outside",
+        tickfont=dict(size=8),
+        title_font=dict(size=9, color=MUTED),
+    )
+
+    fig.update_yaxes(
+        showgrid=True,
+        gridcolor=GRID,
+        zeroline=False,
+        color=MUTED,
+        automargin=True,
+        ticks="outside",
+        tickfont=dict(size=8),
+        title_font=dict(size=9, color=MUTED),
+        title_standoff=6,
+    )
+
     return fig
 
 
@@ -77,6 +99,25 @@ def _price_range_with_padding(price_series: pd.Series) -> tuple[float, float] | 
     return (y_min - pad, y_max + pad)
 
 
+def _shared_time_axis(df: pd.DataFrame, nticks: int = 4):
+    if df is None or df.empty or "fetched_at" not in df.columns:
+        return None, None
+
+    x = pd.to_datetime(df["fetched_at"], errors="coerce").dropna()
+    if x.empty:
+        return None, None
+
+    x_min = x.iloc[0]
+    x_max = x.iloc[-1]
+
+    if x_min == x_max:
+        tickvals = [x_min]
+    else:
+        tickvals = pd.date_range(start=x_min, end=x_max, periods=nticks)
+
+    return [x_min, x_max], list(tickvals)
+
+
 def make_price_mini_fig(df: pd.DataFrame, symbol: str):
     if df is None or df.empty:
         return _empty_fig(f"{symbol}: waiting for live data", height=180)
@@ -103,17 +144,32 @@ def make_price_mini_fig(df: pd.DataFrame, symbol: str):
     )
 
     y_range = _price_range_with_padding(df["price"])
+    x_range, tickvals = _shared_time_axis(df, nticks=4)
 
     _base_layout(fig, 200)
-    fig.update_layout(margin=dict(l=10, r=4, t=4, b=14))
-    fig.update_xaxes(showticklabels=False)
-    fig.update_yaxes(nticks=4)
+    fig.update_layout(
+        margin=dict(l=28, r=4, t=4, b=10),
+    )
+
+    fig.update_xaxes(
+        range=x_range,
+        tickvals=tickvals,
+        showticklabels=False,
+        title_text=None,
+        automargin=False,
+    )
+
+    fig.update_yaxes(
+        nticks=3,
+        tickformat=".0f",   # whole numbers only
+        title_text=None,
+        automargin=False,
+    )
 
     if y_range is not None:
-        fig.update_yaxes(range=list(y_range), tickformat=",.2f")
+        fig.update_yaxes(range=list(y_range))
 
     return fig
-
 
 def _add_threshold_segment_traces(fig: go.Figure, x, y, threshold=2.0):
     x_vals = list(x)
@@ -212,10 +268,30 @@ def make_z_mini_fig(df: pd.DataFrame, symbol: str):
         )
     )
 
+    x_range, tickvals = _shared_time_axis(df, nticks=4)
+
     _base_layout(fig, 200)
-    fig.update_layout(margin=dict(l=10, r=4, t=4, b=14))
-    fig.update_xaxes(showticklabels=False)
-    fig.update_yaxes(range=[-4, 4], nticks=5)
+    fig.update_layout(
+        margin=dict(l=28, r=4, t=4, b=24),
+    )
+
+    fig.update_xaxes(
+        range=x_range,
+        tickvals=tickvals,
+        tickformat="%H:%M",
+        showticklabels=True,
+        title_text=None,
+        automargin=False,
+    )
+
+    fig.update_yaxes(
+        range=[-4, 4],
+        tickvals=[-3, -2, 0, 2, 3],
+        ticktext=["-3", "-2", "0", "2", "3"],
+        title_text=None,
+        automargin=False,
+    )
+
     return fig
 
 
@@ -254,10 +330,13 @@ def make_detail_live_price_fig(df: pd.DataFrame, symbol: str):
     fig.update_xaxes(
         tickformat="%H:%M",
         nticks=6,
+        title_text="Time",
     )
     fig.update_yaxes(
         tickformat=",.2f",
         nticks=6,
+        title_text="Price ($)",
+        title_standoff=10,
     )
 
     if y_range is not None:
@@ -302,8 +381,17 @@ def make_detail_live_z_fig(df: pd.DataFrame, symbol: str):
 
     _base_layout(fig, 320)
     fig.update_layout(margin=dict(l=56, r=14, t=8, b=36))
-    fig.update_xaxes(tickformat="%H:%M", nticks=6)
-    fig.update_yaxes(range=[-4, 4], nticks=7)
+    fig.update_xaxes(
+        tickformat="%H:%M",
+        nticks=6,
+        title_text="Time",
+    )
+    fig.update_yaxes(
+        range=[-4, 4],
+        nticks=7,
+        title_text="Z-score",
+        title_standoff=10,
+    )
     return fig
 
 
@@ -324,6 +412,22 @@ def make_hist_vol_fig(hist_df: pd.DataFrame, symbol: str):
             hovertemplate="%{x}<br>60D vol %{y:.2f}%<extra></extra>",
         )
     )
+
     _base_layout(fig, 360)
-    fig.update_yaxes(title="Percent")
+    fig.update_layout(
+        margin=dict(l=64, r=14, t=8, b=34),
+    )
+
+    fig.update_xaxes(
+        tickformat="%b %Y",
+        nticks=7,
+        title_text="Date",
+    )
+
+    fig.update_yaxes(
+        title_text="Percent",
+        title_standoff=12,
+        tickformat=".0f",
+    )
+
     return fig
